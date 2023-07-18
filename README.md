@@ -1,5 +1,8 @@
 # Ogu.FluentValidation.AspNetCore.Attributes
 
+[![NuGet](https://img.shields.io/nuget/v/Ogu.FluentValidation.AspNetCore.Attribute.svg?color=1ecf18)](https://nuget.org/packages/Ogu.FluentValidation.AspNetCore.Attribute)
+[![Nuget](https://img.shields.io/nuget/dt/Ogu.FluentValidation.AspNetCore.Attribute.svg?logo=nuget)](https://nuget.org/packages/Ogu.FluentValidation.AspNetCore.Attribute)
+
 ## Introduction
 
 Ogu.FluentValidation.AspNetCore.Attributes is a library that extends [FluentValidation](https://github.com/FluentValidation/FluentValidation) with additional attributes to simplify validation in ASP.NET Core applications. It allows you to specify validation rules directly on the model properties using attributes, reducing the need for explicit validation logic in your controllers.
