@@ -5,10 +5,11 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Ogu.FluentValidation.AspNetCore.Attribute
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class ValidateAttribute : ActionFilterAttribute
     {
         public ValidateAttribute(Type modelType, int order = 0) : this(new[] { modelType }, order) { }
@@ -27,28 +28,31 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
             if (controllerActionDescriptor == null)
                 return;
 
-            foreach (var modelType in ModelTypes)
+            if (controllerActionDescriptor.MethodInfo.GetCustomAttribute<SkipValidateAttribute>() == null)
             {
-                var model = context.ActionArguments.Values.FirstOrDefault(x => modelType.IsInstanceOfType(x));
-
-                if (model != null)
+                foreach (var modelType in ModelTypes)
                 {
-                    var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
-                    var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
+                    var model = context.ActionArguments.Values.FirstOrDefault(x => modelType.IsInstanceOfType(x));
 
-                    if (validator != null)
+                    if (model != null)
                     {
-                        var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
-                            m.Name == "Validate" && m.GetParameters()[0].ParameterType == modelType);
+                        var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
+                        var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
 
-                        var validationResult = (ValidationResult)validateMethod.Invoke(validator, new[] { model });
-
-                        if (!validationResult.IsValid)
+                        if (validator != null)
                         {
-                            var invalidFluentValidation = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) as IInvalidValidationResponse;
+                            var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
+                                m.Name == "Validate" && m.GetParameters()[0].ParameterType == modelType);
 
-                            context.Result = invalidFluentValidation?.GetResult(model, validationResult.Errors) ??
-                                             new BadRequestObjectResult(validationResult.Errors);
+                            var validationResult = (ValidationResult)validateMethod.Invoke(validator, new[] { model });
+
+                            if (!validationResult.IsValid)
+                            {
+                                var invalidFluentValidation = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) as IInvalidValidationResponse;
+
+                                context.Result = invalidFluentValidation?.GetResult(model, validationResult.Errors) ??
+                                                 new BadRequestObjectResult(validationResult.Errors);
+                            }
                         }
                     }
                 }

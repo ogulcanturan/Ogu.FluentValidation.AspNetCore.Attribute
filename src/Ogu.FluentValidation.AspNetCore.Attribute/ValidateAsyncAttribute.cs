@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ogu.FluentValidation.AspNetCore.Attribute
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class ValidateAsyncAttribute : ActionFilterAttribute
     {
         public ValidateAsyncAttribute(Type modelType, int order = 0, bool isCancellationTokenActive = true) : this(new[] { modelType }, order, isCancellationTokenActive) { }
@@ -31,29 +32,32 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
             if (controllerActionDescriptor == null)
                 return;
 
-            foreach (var modelType in ModelTypes)
+            if (controllerActionDescriptor.MethodInfo.GetCustomAttribute<SkipValidateAttribute>() == null)
             {
-                var model = context.ActionArguments.Values.FirstOrDefault(x => modelType.IsInstanceOfType(x));
-
-                if (model != null)
+                foreach (var modelType in ModelTypes)
                 {
-                    var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
-                    var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
+                    var model = context.ActionArguments.Values.FirstOrDefault(x => modelType.IsInstanceOfType(x));
 
-                    if (validator != null)
+                    if (model != null)
                     {
-                        var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
-                            m.Name == "ValidateAsync" && m.GetParameters()[0].ParameterType == modelType);
+                        var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
+                        var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
 
-                        var validationResult = await (Task<ValidationResult>)validateMethod.Invoke(validator, new[] { model, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None });
-
-                        if (!validationResult.IsValid)
+                        if (validator != null)
                         {
-                            var invalidFluentValidation = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) as IInvalidValidationResponse;
+                            var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
+                                m.Name == "ValidateAsync" && m.GetParameters()[0].ParameterType == modelType);
 
-                            context.Result = invalidFluentValidation != null
-                                ? await invalidFluentValidation.GetResultAsync(model, validationResult.Errors, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None)
-                                : new BadRequestObjectResult(validationResult.Errors);
+                            var validationResult = await (Task<ValidationResult>)validateMethod.Invoke(validator, new[] { model, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None });
+
+                            if (!validationResult.IsValid)
+                            {
+                                var invalidFluentValidation = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) as IInvalidValidationResponse;
+
+                                context.Result = invalidFluentValidation != null
+                                    ? await invalidFluentValidation.GetResultAsync(model, validationResult.Errors, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None)
+                                    : new BadRequestObjectResult(validationResult.Errors);
+                            }
                         }
                     }
                 }

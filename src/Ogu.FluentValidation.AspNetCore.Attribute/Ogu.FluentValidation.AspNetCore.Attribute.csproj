@@ -5,7 +5,7 @@
 	<AssemblyName>Ogu.FluentValidation.AspNetCore.Attribute</AssemblyName>
 	<PackageId>Ogu.FluentValidation.AspNetCore.Attribute</PackageId>
 	<Product>Ogu.FluentValidation.AspNetCore.Attribute</Product>
-	<Version>1.0.0</Version>
+	<Version>1.0.1</Version>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Authors>Oğulcan TURAN</Authors>
 	<Copyright>Copyright (c) Oğulcan TURAN 2023</Copyright>
