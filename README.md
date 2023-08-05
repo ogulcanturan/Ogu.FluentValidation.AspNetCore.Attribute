@@ -11,7 +11,7 @@ Ogu.FluentValidation.AspNetCore.Attribute is a library that extends [FluentValid
 ## Features
 
 - Supports validation rules through attributes on model properties.
-- Provides `[Validate]` and `[ValidateAsync]` attribute to automatically validate model objects in controller actions.
+- Provides `[Validate]` and `[ValidateAsync]` attribute to automatically validate model objects in controller actions. To escape validation `[SkipValidate]` attribute can be used.
 - Provides `[IInvalidValidationResponse]` interface for controlling invalid validation responses.
 - Built on top of FluentValidation, so you still have the full power and flexibility of FluentValidation for more complex validation scenarios.
 
