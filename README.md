@@ -1,6 +1,6 @@
 # Ogu.FluentValidation.AspNetCore.Attribute
 
-[![.NET Core Desktop](https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute/actions/workflows/dotnet-desktop.yml/badge.svg?branch=master)](https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute/actions/workflows/dotnet-desktop.yml)
+[![.NET](https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute/actions/workflows/dotnet.yml)
 [![NuGet](https://img.shields.io/nuget/v/Ogu.FluentValidation.AspNetCore.Attribute.svg?color=1ecf18)](https://nuget.org/packages/Ogu.FluentValidation.AspNetCore.Attribute)
 [![Nuget](https://img.shields.io/nuget/dt/Ogu.FluentValidation.AspNetCore.Attribute.svg?logo=nuget)](https://nuget.org/packages/Ogu.FluentValidation.AspNetCore.Attribute)
 
