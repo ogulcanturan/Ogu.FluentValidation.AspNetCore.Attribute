@@ -5,6 +5,12 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ogu.FluentValidation.AspNetCore.Attribute", "src\Ogu.FluentValidation.AspNetCore.Attribute\Ogu.FluentValidation.AspNetCore.Attribute.csproj", "{895159E5-D0D4-43AE-BC40-EA13323291E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A80532B4-9C84-4933-B3DB-CABF0C82507C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ogu.FluentValidation.AspNetCore.Attribute.Tests", "tests\Ogu.FluentValidation.AspNetCore.Attribute.Tests\Ogu.FluentValidation.AspNetCore.Attribute.Tests.csproj", "{1197A55A-56C9-4D76-BB98-D82A788B79A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{077A0597-D18E-4EA7-8ECC-1571EEFDCAD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,17 @@ Global
 		{895159E5-D0D4-43AE-BC40-EA13323291E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{895159E5-D0D4-43AE-BC40-EA13323291E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{895159E5-D0D4-43AE-BC40-EA13323291E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1197A55A-56C9-4D76-BB98-D82A788B79A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1197A55A-56C9-4D76-BB98-D82A788B79A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1197A55A-56C9-4D76-BB98-D82A788B79A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1197A55A-56C9-4D76-BB98-D82A788B79A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{895159E5-D0D4-43AE-BC40-EA13323291E7} = {A80532B4-9C84-4933-B3DB-CABF0C82507C}
+		{1197A55A-56C9-4D76-BB98-D82A788B79A5} = {077A0597-D18E-4EA7-8ECC-1571EEFDCAD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FA9B782-BA60-4F49-B21F-6F607CBF8D47}

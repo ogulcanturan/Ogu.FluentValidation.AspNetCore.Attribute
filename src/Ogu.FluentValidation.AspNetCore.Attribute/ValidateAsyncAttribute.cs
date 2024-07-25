@@ -15,6 +15,7 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
     public class ValidateAsyncAttribute : ActionFilterAttribute
     {
         public ValidateAsyncAttribute(Type modelType, int order = 0, bool isCancellationTokenActive = true) : this(new[] { modelType }, order, isCancellationTokenActive) { }
+
         public ValidateAsyncAttribute(Type[] modelTypes, int order = 0, bool isCancellationTokenActive = true)
         {
             ModelTypes = modelTypes ?? throw new ArgumentNullException(nameof(modelTypes));
@@ -23,14 +24,15 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
         }
 
         public Type[] ModelTypes { get; }
+
         public bool IsCancellationTokenActive { get; }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var controllerActionDescriptor = context.ActionDescriptor as ControllerActionDescriptor;
-
-            if (controllerActionDescriptor == null)
+            if (!(context.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor))
+            {
                 return;
+            }
 
             if (controllerActionDescriptor.MethodInfo.GetCustomAttribute<SkipValidateAttribute>() == null)
             {
@@ -38,27 +40,28 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
                 {
                     var model = context.ActionArguments.Values.FirstOrDefault(x => modelType.IsInstanceOfType(x));
 
-                    if (model != null)
+                    if (model == null)
                     {
-                        var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
-                        var validator = context.HttpContext.RequestServices.GetService(validatorType) as IValidator;
+                        continue;
+                    }
 
-                        if (validator != null)
-                        {
-                            var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
-                                m.Name == "ValidateAsync" && m.GetParameters()[0].ParameterType == modelType);
+                    var validatorType = typeof(IValidator<>).MakeGenericType(modelType);
 
-                            var validationResult = await (Task<ValidationResult>)validateMethod.Invoke(validator, new[] { model, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None });
+                    if (!(context.HttpContext.RequestServices.GetService(validatorType) is IValidator validator))
+                    {
+                        continue;
+                    }
 
-                            if (!validationResult.IsValid)
-                            {
-                                var invalidFluentValidation = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) as IInvalidValidationResponse;
+                    var validateMethod = validator.GetType().GetMethods().FirstOrDefault(m =>
+                        m.Name == "ValidateAsync" && m.GetParameters()[0].ParameterType == modelType);
 
-                                context.Result = invalidFluentValidation != null
-                                    ? await invalidFluentValidation.GetResultAsync(model, validationResult.Errors, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None)
-                                    : new BadRequestObjectResult(validationResult.Errors);
-                            }
-                        }
+                    var validationResult = await (Task<ValidationResult>)validateMethod.Invoke(validator, new[] { model, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None });
+
+                    if (!validationResult.IsValid)
+                    {
+                        context.Result = context.HttpContext.RequestServices.GetService(typeof(IInvalidValidationResponse)) is IInvalidValidationResponse invalidFluentValidation
+                            ? await invalidFluentValidation.GetResultAsync(model, validationResult.Errors, IsCancellationTokenActive ? context.HttpContext.RequestAborted : CancellationToken.None)
+                            : new BadRequestObjectResult(validationResult.Errors);
                     }
                 }
             }
