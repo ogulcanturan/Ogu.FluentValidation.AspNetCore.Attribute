@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api", "Sample.Api.csproj", "{9143D66E-813C-4C02-BB3C-45FD74C515D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ogu.FluentValidation.AspNetCore.Attribute", "..\..\src\Ogu.FluentValidation.AspNetCore.Attribute\Ogu.FluentValidation.AspNetCore.Attribute.csproj", "{4EEA3DB3-5F35-438A-85FD-503839EC1B81}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9143D66E-813C-4C02-BB3C-45FD74C515D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9143D66E-813C-4C02-BB3C-45FD74C515D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9143D66E-813C-4C02-BB3C-45FD74C515D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9143D66E-813C-4C02-BB3C-45FD74C515D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEA3DB3-5F35-438A-85FD-503839EC1B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEA3DB3-5F35-438A-85FD-503839EC1B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEA3DB3-5F35-438A-85FD-503839EC1B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEA3DB3-5F35-438A-85FD-503839EC1B81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6E8AADCE-EB35-4FEA-9928-E9A06B82FB5F}
+	EndGlobalSection
+EndGlobal

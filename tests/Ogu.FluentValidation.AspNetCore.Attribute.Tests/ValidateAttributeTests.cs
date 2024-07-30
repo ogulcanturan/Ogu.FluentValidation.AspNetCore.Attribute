@@ -9,7 +9,6 @@ using Moq;
 using Ogu.FluentValidation.AspNetCore.Attribute.Tests.TestData;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ogu.FluentValidation.AspNetCore.Attribute.Tests
@@ -28,8 +27,8 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute.Tests
                 .Returns(new ValidationResult(new List<ValidationFailure> { new ValidationFailure("Name", "Name required") }));
 
             _invalidValidationResponseMock = new Mock<IInvalidValidationResponse>();
-            _invalidValidationResponseMock.Setup(m => m.GetResultAsync(It.IsAny<object>(), Moq.It.IsAny<List<ValidationFailure>>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new BadRequestObjectResult("Error"));
+            _invalidValidationResponseMock.Setup(m => m.GetResult(It.IsAny<object>(), Moq.It.IsAny<List<ValidationFailure>>()))
+                .Returns(new BadRequestObjectResult("Error"));
 
             var services = new ServiceCollection()
                 .AddSingleton(_validatorMock.Object)

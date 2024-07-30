@@ -12,7 +12,6 @@
 		<PackageProjectUrl>https://github.com/ogulcanturan/FluentValidation.AspNetCore.Attribute</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute</RepositoryUrl>
 		<PackageTags>fluentvalidation;fluentvalidationattribute;fluentattribute;fluentvalidationaspnetcoreattribute</PackageTags>
-		<Title>FluentValidation with additional attributes in ASP.NET Core</Title>
 		<RepositoryType>git</RepositoryType>
 		<Description>This library extends FluentValidation with additional attributes to simplify validation in ASP.NET Core applications</Description>
 		<PackageIcon>ogu-logo.png</PackageIcon>
