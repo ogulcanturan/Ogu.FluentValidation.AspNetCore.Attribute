@@ -9,7 +9,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Oğulcan TURAN</Authors>
 		<Copyright>Copyright (c) Oğulcan TURAN 2023</Copyright>
-		<PackageProjectUrl>https://github.com/ogulcanturan/FluentValidation.AspNetCore.Attribute</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ogulcanturan/Ogu.FluentValidation.AspNetCore.Attribute</RepositoryUrl>
 		<PackageTags>fluentvalidation;fluentvalidationattribute;fluentattribute;fluentvalidationaspnetcoreattribute</PackageTags>
 		<RepositoryType>git</RepositoryType>

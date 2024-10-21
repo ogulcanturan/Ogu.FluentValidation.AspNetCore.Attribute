@@ -10,6 +10,7 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
     internal class InvalidValidationResponse : IInvalidValidationResponse
     {
         private readonly Func<List<ValidationFailure>, IActionResult> _invalidResponse;
+
         public InvalidValidationResponse(Func<List<ValidationFailure>, IActionResult> invalidResponse)
         {
             _invalidResponse = invalidResponse ?? throw new ArgumentNullException(nameof(invalidResponse));

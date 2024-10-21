@@ -9,7 +9,7 @@ namespace Sample.Api.Controllers
     {
         [HttpPost]
         [Validate(typeof(GetSampleRequestValidatorModel))]
-        public IActionResult GetSample(GetSampleRequestValidatorModel model)
+        public IActionResult GetSample(GetSampleRequestValidatorModel validatorModel)
         {
             return Ok();
         }
