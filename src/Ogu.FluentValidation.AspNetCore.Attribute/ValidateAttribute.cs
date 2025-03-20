@@ -12,11 +12,11 @@ using System.Threading;
 namespace Ogu.FluentValidation.AspNetCore.Attribute
 {
     /// <summary>
-    ///     An attribute that validates the specified model synchronously before an action method is invoked.
+    /// An attribute that validates the specified model synchronously before an action method is invoked.
     /// </summary>
     /// <remarks>
-    ///     This attribute can be applied to both methods and classes. 
-    ///     It is used to ensure that the models passed to the action method meet validation criteria before further processing.
+    /// This attribute can be applied to both methods and classes. 
+    /// It is used to ensure that the models passed to the action method meet validation criteria before further processing.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class ValidateAttribute : ActionFilterAttribute
@@ -26,14 +26,14 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
                 new Lazy<ConcurrentDictionary<Type, (Type, MethodInfo)>>(LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ValidateAttribute"/> class for a single model type.
+        /// Initializes a new instance of the <see cref="ValidateAttribute"/> class for a single model type.
         /// </summary>
         /// <param name="modelType">The type of the model to validate.</param>
         /// <param name="order">The order in which the action filter attribute is applied. Default is 0.</param>
         public ValidateAttribute(Type modelType, int order = 0) : this(new[] { modelType }, order) { }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ValidateAttribute"/> class for multiple model types.
+        /// Initializes a new instance of the <see cref="ValidateAttribute"/> class for multiple model types.
         /// </summary>
         /// <param name="modelTypes">An array of model types to validate.</param>
         /// <param name="order">The order in which the action filter attribute is applied. Default is 0.</param>
@@ -45,7 +45,7 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
         }
 
         /// <summary>
-        ///     An array of model types to validate.
+        /// An array of model types to validate.
         /// </summary>
         public Type[] ModelTypes { get; }
 

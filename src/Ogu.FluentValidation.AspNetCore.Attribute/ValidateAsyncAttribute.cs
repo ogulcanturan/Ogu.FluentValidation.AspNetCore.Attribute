@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 namespace Ogu.FluentValidation.AspNetCore.Attribute
 {
     /// <summary>
-    ///     An attribute that validates the specified model asynchronously before an action method is invoked.
+    /// An attribute that validates the specified model asynchronously before an action method is invoked.
     /// </summary>
     /// <remarks>
-    ///     This attribute can be applied to both methods and classes. 
-    ///     It is used to ensure that the models passed to the action method meet validation criteria before further processing.
+    /// This attribute can be applied to both methods and classes. 
+    /// It is used to ensure that the models passed to the action method meet validation criteria before further processing.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class ValidateAsyncAttribute : ActionFilterAttribute
@@ -27,7 +27,7 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
                 new Lazy<ConcurrentDictionary<Type, (Type, MethodInfo)>>(LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ValidateAttribute"/> class for a single model type.
+        /// Initializes a new instance of the <see cref="ValidateAttribute"/> class for a single model type.
         /// </summary>
         /// <param name="modelType">The type of the model to validate.</param>
         /// <param name="order">The order in which the action filter attribute is applied. Default is 0.</param>
@@ -35,7 +35,7 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
         public ValidateAsyncAttribute(Type modelType, int order = 0, bool isCancellationTokenActive = true) : this(new[] { modelType }, order, isCancellationTokenActive) { }
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="ValidateAsyncAttribute"/> class for multiple model types.
+        /// Initializes a new instance of the <see cref="ValidateAsyncAttribute"/> class for multiple model types.
         /// </summary>
         /// <param name="modelTypes">An array of model types to validate.</param>
         /// <param name="order">The order in which the action filter attribute is applied. Default is 0.</param>
@@ -49,17 +49,17 @@ namespace Ogu.FluentValidation.AspNetCore.Attribute
         }
 
         /// <summary>
-        ///     An array of model types to validate.
+        /// An array of model types to validate.
         /// </summary>
         public Type[] ModelTypes { get; }
 
         /// <summary>
-        ///     Indicates whether the active <see cref="ActionContext.HttpContext"/> cancellation token is being used.
-        ///     If <c>true</c>, the cancellation token from the current <see cref="ActionContext.HttpContext"/> will be utilized; 
-        ///     otherwise, no cancellation token will be applied.
+        /// Indicates whether the active <see cref="ActionContext.HttpContext"/> cancellation token is being used.
+        /// If <c>true</c>, the cancellation token from the current <see cref="ActionContext.HttpContext"/> will be utilized; 
+        /// otherwise, no cancellation token will be applied.
         /// </summary>
         /// <remarks>
-        ///     The default value is <c>true</c>
+        /// The default value is <c>true</c>
         /// </remarks>
         public bool IsCancellationTokenActive { get; }
 
